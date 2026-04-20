@@ -41,4 +41,34 @@ public class EmployeeService {
 
         return new ApiResponse<>("Employee added successfully", emp);
     }
+
+    // ================= DELETE =================
+    public ApiResponse<?> delete(Long id) {
+
+        Employee emp = employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+        // 🔥 Soft delete
+        emp.setIsDeleted(true);
+        employeeRepository.save(emp);
+
+        return new ApiResponse<>("Employee deleted successfully", null);
+    }
+
+    // ================= UPDATE =================
+    public ApiResponse<?> update(Long id, EmployeeDTO dto) {
+
+        Employee emp = employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+        emp.setFirstName(dto.getFirstName());
+        emp.setLastName(dto.getLastName());
+        emp.setEmail(dto.getEmail());
+        emp.setDepartment(dto.getDepartment());
+        emp.setSalary(dto.getSalary());
+
+        employeeRepository.save(emp);
+
+        return new ApiResponse<>("Employee updated successfully", emp);
+    }
 }

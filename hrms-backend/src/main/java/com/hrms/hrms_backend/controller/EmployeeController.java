@@ -29,4 +29,17 @@ public class EmployeeController {
     public ApiResponse<?> create(@Valid @RequestBody EmployeeDTO dto) {
         return employeeService.create(dto);
     }
+
+    // ================= DELETE =================
+    @DeleteMapping("/{id}")
+    public ApiResponse<?> delete(@PathVariable Long id) {
+        return employeeService.delete(id);
+    }
+
+    // ================= UPDATE =================
+    @PutMapping("/{id}")
+    public ApiResponse<?> update(@PathVariable Long id,
+                                 @RequestBody EmployeeDTO dto) {
+        return employeeService.update(id, dto);
+    }
 }
